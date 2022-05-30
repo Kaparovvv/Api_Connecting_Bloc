@@ -93,8 +93,8 @@ class _UserInfoState extends State<UserInfo>
                       indicatorSize: TabBarIndicatorSize.label,
                     ),
                     SizedBox(
-                      width: 400,
-                      height: 300,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.4,
                       child: TabBarView(
                         dragStartBehavior: DragStartBehavior.down,
                         controller: _tabController,
@@ -129,7 +129,9 @@ class _UserInfoState extends State<UserInfo>
                                       state.userModel.results.first.name.last),
                                   textUser(
                                       state.userModel.results.first.gender),
-                                  textUser(state.userModel.results.first.registered.date.toString()),
+                                  textUser(state
+                                      .userModel.results.first.registered.date
+                                      .toString()),
                                   textUser(state
                                       .userModel.results.first.registered.age
                                       .toString()),

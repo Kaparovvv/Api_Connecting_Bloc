@@ -23,7 +23,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           } else {
             emit(UserErrorState(error: 'Ошибка системы'));
           }
-        } on SocketException catch (e) {
+        } on SocketException catch (_) {
           emit(UserErrorState(error: 'Нет интернет соединения'));
         } catch (e) {
           emit(UserErrorState(error: e.toString()));
