@@ -47,22 +47,22 @@ class _UserInfoState extends State<UserInfo>
             end: Alignment.bottomCenter,
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
-          child: BlocConsumer<UserBloc, UserState>(
-            bloc: _userBloc,
-            listener: (context, state) {
-              if (state is UserErrorState) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(state.error)));
-              }
-            },
-            builder: (context, state) {
-              if (state is UserLoadingState) {
-                return Center(child: CircularProgressIndicator());
-              }
-              if (state is UserLoadedState) {
-                return Column(
+        child: BlocConsumer<UserBloc, UserState>(
+          bloc: _userBloc,
+          listener: (context, state) {
+            if (state is UserErrorState) {
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.error)));
+            }
+          },
+          builder: (context, state) {
+            if (state is UserLoadingState) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is UserLoadedState) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 50, left: 15, right: 15),
+                child: Column(
                   children: [
                     CircleAvatar(
                       backgroundImage: NetworkImage(
@@ -103,6 +103,7 @@ class _UserInfoState extends State<UserInfo>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Name',
@@ -116,6 +117,7 @@ class _UserInfoState extends State<UserInfo>
                                 ],
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Value',
@@ -127,22 +129,7 @@ class _UserInfoState extends State<UserInfo>
                                       state.userModel.results.first.name.last),
                                   textUser(
                                       state.userModel.results.first.gender),
-                                  Row(
-                                    children: [
-                                      textUser(
-                                          '${state.userModel.results.first.registered.date.year.toString()}-'),
-                                      textUser(
-                                          '${state.userModel.results.first.registered.date.month.toString()}-'),
-                                      textUser(state.userModel.results.first
-                                          .registered.date.day
-                                          .toString()),
-                                      textUser(state.userModel.results.first
-                                          .registered.date.timeZoneName),
-                                      textUser(state.userModel.results.first
-                                          .registered.date.timeZoneOffset
-                                          .toString()),
-                                    ],
-                                  ),
+                                  textUser(state.userModel.results.first.registered.date.toString()),
                                   textUser(state
                                       .userModel.results.first.registered.age
                                       .toString()),
@@ -154,6 +141,7 @@ class _UserInfoState extends State<UserInfo>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Name',
@@ -167,6 +155,7 @@ class _UserInfoState extends State<UserInfo>
                                 ],
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Value',
@@ -194,6 +183,7 @@ class _UserInfoState extends State<UserInfo>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Name',
@@ -207,6 +197,7 @@ class _UserInfoState extends State<UserInfo>
                                 ],
                               ),
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   const SizedBox(height: 15),
                                   const Text('Value',
@@ -254,21 +245,21 @@ class _UserInfoState extends State<UserInfo>
                       ),
                     ),
                   ],
-                );
-              }
-              if (state is UserErrorState) {
-                return Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      _userBloc.add(GetUserEvent());
-                    },
-                    child: const Text('Повторить'),
-                  ),
-                );
-              }
-              return const Text('Error');
-            },
-          ),
+                ),
+              );
+            }
+            if (state is UserErrorState) {
+              return Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    _userBloc.add(GetUserEvent());
+                  },
+                  child: const Text('Повторить'),
+                ),
+              );
+            }
+            return const Text('Error');
+          },
         ),
       ),
     );
